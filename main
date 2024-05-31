@@ -1,0 +1,56 @@
+import java.util.Scanner;
+
+public class HomeCostCalculator {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input: Mortgage details here 
+        System.out.print("Enter the principal loan amount: ");
+        double principal = scanner.nextDouble();
+
+        System.out.print("Enter the annual interest rate (in percentage): ");
+        double annualInterestRate = scanner.nextDouble();
+
+        System.out.print("Enter the loan term (in years): ");
+        int loanTermYears = scanner.nextInt();
+
+        // Input: Property tax, HOA, Homeowner insurance 
+        System.out.print("Enter the annual property tax: ");
+        double annualPropertyTax = scanner.nextDouble();
+
+        System.out.print("Enter the monthly HOA fee: ");
+        double monthlyHOA = scanner.nextDouble();
+
+        System.out.print("Enter the annual homeowner insurance: ");
+        double annualHomeownerInsurance = scanner.nextDouble();
+
+        // Calculate monthly mortgage payment
+        double monthlyMortgage = calculateMonthlyMortgage(principal, annualInterestRate, loanTermYears);
+
+        // Calculate monthly property tax
+        double monthlyPropertyTax = annualPropertyTax / 12;
+
+        // Calculate monthly homeowner insurance
+        double monthlyHomeownerInsurance = annualHomeownerInsurance / 12;
+
+        // Calculate total monthly cost
+        double totalMonthlyCost = monthlyMortgage + monthlyPropertyTax + monthlyHOA + monthlyHomeownerInsurance;
+
+        // Output the results
+        System.out.printf("Monthly Mortgage: $%.2f%n", monthlyMortgage);
+        System.out.printf("Monthly Property Tax: $%.2f%n", monthlyPropertyTax);
+        System.out.printf("Monthly HOA Fee: $%.2f%n", monthlyHOA);
+        System.out.printf("Monthly Homeowner Insurance: $%.2f%n", monthlyHomeownerInsurance);
+        System.out.printf("Total Monthly Cost: $%.2f%n", totalMonthlyCost);
+
+        scanner.close();
+    }
+
+    // Method to calculate the monthly mortgage payment
+    public static double calculateMonthlyMortgage(double principal, double annualInterestRate, int loanTermYears) {
+        double monthlyInterestRate = (annualInterestRate / 100) / 12;
+        int numberOfPayments = loanTermYears * 12;
+        return (principal * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+    }
+}
